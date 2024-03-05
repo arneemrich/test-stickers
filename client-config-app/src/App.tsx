@@ -14,6 +14,7 @@ export default function ConfigApp() {
             i18n.changeLanguage(c.app.locale);
             setTheme(getTeamsTheme(c.app.theme));
         });
+        
         registerOnThemeChangeHandler(setTheme);
     }, []);
     return (

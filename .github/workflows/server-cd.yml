@@ -8,6 +8,10 @@ on:
             - ".github/workflows/server-cd.yml"
             - "server/**"
             - "Stickers.sln"
+    workflow_dispatch:
+            - ".github/workflows/server-cd.yml"
+            - "server/**"
+            - "Stickers.sln"
 
 permissions:
     contents: read
@@ -44,7 +48,7 @@ jobs:
     server-deploy:
         needs: [server-build]
         environment:
-            name: ${{ fromJSON('["Integration","Production"]')[ github.ref_name == 'v2'] }}
+            name: ${{ fromJSON('["Integration","Production"]')[ github.ref_name != 'main'] }}
             url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}/healthz
         runs-on: ubuntu-latest
         timeout-minutes: 6

@@ -10,13 +10,21 @@ on:
             - "manifest/**"
             - "official-stickers/**"
             - "website/**"
+    workflow_dispatch:
+        paths:
+        - ".github/workflows/fe-cd.yml"
+        - "client-config-app/**"
+        - "manifest/**"
+        - "official-stickers/**"
+        - "website/**"
+
 
 permissions:
     contents: read
 
 env:
     # [INT_CONFIG, PROD_CONFIG]
-    WEBSITE: ${{ fromJSON('["stickers-test.azureedge.net","sticker.newfuture.cc"]')[ github.ref_name == 'v2'] }}
+    WEBSITE: ${{ fromJSON('["mystickerstest.azureedge.net","sticker.newfuture.cc"]')[ github.ref_name == 'v2'] }}
     REACT_APP_API_ROOT: ${{ fromJSON('["https://stickers-test.azurewebsites.net","https://stickers-api.newfuture.cc"]')[ github.ref_name == 'v2'] }}
     REACT_APP_AAD_ID: ${{ fromJSON('["eae0aa56-582c-40f7-8daa-b3eb8d1f0732","695d3f13-6131-4224-aacd-26c8aff039d2"]')[ github.ref_name == 'v2'] }}
     APP_PRE_FIX: ${{ fromJSON('["[I]",""]')[ github.ref_name == 'v2'] }}

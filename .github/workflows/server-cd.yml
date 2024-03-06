@@ -9,6 +9,7 @@ on:
             - "server/**"
             - "Stickers.sln"
     workflow_dispatch:
+        paths:
             - ".github/workflows/server-cd.yml"
             - "server/**"
             - "Stickers.sln"

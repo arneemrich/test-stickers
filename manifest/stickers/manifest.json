@@ -5,13 +5,13 @@
     "version": "${VERSION}",
     "packageName": "stickers",
     "developer": {
-        "name": "New Future",
+        "name": "AE",
         "websiteUrl": "https://${WEBSITE}",
         "privacyUrl": "https://${WEBSITE}/privacy.html",
         "termsOfUseUrl": "https://${WEBSITE}/terms.html"
     },
     "name": {
-        "short": "${APP_PRE_FIX}My Stickers",
+        "short": "${APP_PRE_FIX}Fris Strickers",
         "full": "${APP_PRE_FIX}My Custom Stickers"
     },
     "description": {

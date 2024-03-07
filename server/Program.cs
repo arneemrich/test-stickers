@@ -150,6 +150,17 @@ builder.Services.AddMemoryCache();
 // Add http services to the container.
 builder.Services.AddHttpClient();
 
+if(builder.Environment.IsProduction()){
+      builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(
+            builder =>
+            {
+                builder.WithOrigins("https://testdeploymentmystickers.z1.web.core.windows.net");
+            });
+    });
+}
+
 // Dev mode
 if (builder.Environment.IsDevelopment())
 {

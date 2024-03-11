@@ -6,6 +6,12 @@ import { StickerApp } from "./components/StickerApp";
 import { INIT_QUERY } from "./common/env";
 import { SWRConfig } from "swr";
 import { swrConfig } from "./utilities/swrConfig";
+import { ApplicationInsights } from '@microsoft/applicationinsights-web'
+
+export const appInsights = new ApplicationInsights({ config: {
+  connectionString: 'InstrumentationKey=5aa5202c-f3bf-4eee-b752-840961cefe25;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/'
+} });
+appInsights.loadAppInsights();
 
 export default function ConfigApp() {
     const [theme, setTheme] = useState(() => getTeamsTheme(INIT_QUERY.get("theme")!));

@@ -2,6 +2,7 @@ import { API, myList, tenantList } from "./http";
 import type { Sticker } from "../model/sticker";
 import { SasInfo, upload } from "./blob";
 import { MAX_BATCH_COUNT } from "../common/env";
+import { appInsights } from "../App";
 
 export async function uploadSticker(file: File, onProgressUpdate: (percent: number) => void) {
     const commitInfo = await uploadToBlob(`${myList}/upload`, file, onProgressUpdate, userQueue);
@@ -14,26 +15,39 @@ export async function uploadTenantSticker(file: File, onProgressUpdate: (percent
 }
 
 export function deleteSticker(sticker: Pick<Sticker, "id" | "src">): Promise<any> {
-    return API.delete(`${myList}/${sticker.id}`, { data: { src: sticker.src } });
+    return API.delete(`${myList}/${sticker.id}`, { data: { src: sticker.src } })
+              .catch(e => {
+                    appInsights.trackEvent({name: "React Client App: deleteSticker", properties: {exception: e}});
+                    throw e;});
 }
 
 export function patchSticker(id: string, data: Partial<Sticker>) {
-    return API.patch(`${myList}/${id}`, data).then((res) => res.data);
+    return API.patch(`${myList}/${id}`, data).then((res) => res.data).catch(e => {
+        appInsights.trackEvent({name: "React Client App: patchSticker", properties: {exception: e}});
+        throw e;});
 }
 
 export function deleteTenantSticker(sticker: Pick<Sticker, "id" | "src">): Promise<any> {
-    return API.delete(`${tenantList}/${sticker.id}`, { data: { src: sticker.src } });
+    return API.delete(`${tenantList}/${sticker.id}`, { data: { src: sticker.src } }).catch(e => {
+        appInsights.trackEvent({name: "React Client App: deleteTenantSticker", properties: {exception: e}});
+        throw e;});
 }
 
 export function patchTenantSticker(id: string, data: Partial<Sticker>) {
-    return API.patch(`${tenantList}/${id}`, data).then((res) => res.data);
+    return API.patch(`${tenantList}/${id}`, data).then((res) => res.data).catch(e => {
+        appInsights.trackEvent({name: "React Client App: patchTenantSticker", properties: {exception: e}});
+        throw e;});
 }
 
 function batchUserCommit(list: CommitInfo[]) {
-    return API.post(`${myList}/batchCommit`, list).then((r) => r.data);
+    return API.post(`${myList}/batchCommit`, list).then((r) => r.data).catch(e => {
+        appInsights.trackEvent({name: "React Client App: batchUserCommit", properties: {exception: e}});
+        throw e;});
 }
 function batchTenantCommit(list: CommitInfo[]) {
-    return API.post(`${tenantList}/batchCommit`, list).then((r) => r.data);
+    return API.post(`${tenantList}/batchCommit`, list).then((r) => r.data).catch(e => {
+        appInsights.trackEvent({name: "React Client App: batchTenantCommit", properties: {exception: e}});
+        throw e;});
 }
 
 interface UploadQueue {

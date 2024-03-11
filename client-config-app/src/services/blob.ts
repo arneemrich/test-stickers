@@ -1,5 +1,6 @@
 import axios, { type AxiosProgressEvent } from "axios";
 import { MAX_CONCURRENCY } from "../common/env";
+import { appInsights } from "../App";
 
 export const blob = axios.create();
 
@@ -44,7 +45,10 @@ export async function upload(
     const contentType = file.type;
     await blob.put(`${sas.url}&comp=block&blockid=${encodeURIComponent(btoa(sas.id))}`, file, {
         onUploadProgress: (p) => onProgress({ percent: 100 * (p.loaded / (p.total || p.bytes)), p }),
-    });
+    }).catch(e => {
+        appInsights.trackEvent({name: "React Client App: upload", properties: {exception: e, sas: sas}});
+        throw e;});
+
     return {
         id: sas.id,
         name: file.name,

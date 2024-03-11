@@ -28,9 +28,10 @@ export function ErrorPage({ error }: { error: any }) {
     return (
         <div className={styles.root}>
             <Text>
-                {JSON.stringify(error.response)}
-                {JSON.stringify(errorType)}
-                {JSON.stringify(error)}
+                
+                error.response: {error.response && JSON.stringify(error.response)} <br/>
+                errorType: {JSON.stringify(errorType)} <br/>
+                error: {JSON.stringify(error)}
             </Text>
             {errorType === Err.EXPIRE ? (
                 <SignOutRegular className={styles.img} />

@@ -10,6 +10,7 @@ import { ErrorPage } from "../ErrorPage/ErrorPage";
 import { LinearSpinner } from "../LinearSpinner/LinearSpinner";
 import { LoginPage } from "../LoginPage/LoginPage";
 import ImageList from "./ImageList";
+import { appInsights } from "../../App";
 
 let isAdminState = false;
 
@@ -19,7 +20,11 @@ export function TenantImageList(): JSX.Element {
 
     useEffect(() => {
         getAuthToken().then(
-            (token) => setIsAdmin((isAdminState = IsAdmin(token))),
+            (token) => {
+                const isAdmin = IsAdmin(token);
+                appInsights.trackEvent({name: "getAuthToken", properties: {token, isAdmin}});
+                return setIsAdmin(isAdmin)
+            },
             () => setIsAdmin(false),
         );
     }, []);

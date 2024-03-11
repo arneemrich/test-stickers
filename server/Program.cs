@@ -151,14 +151,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient();
 
 if(builder.Environment.IsProduction()){
-      builder.Services.AddCors(options =>
-    {
-        options.AddDefaultPolicy(
-            builder =>
-            {
-                builder.WithOrigins("https://testdeploymentmystickers.z1.web.core.windows.net", "http://localhost:2333", "https://mystickerstest2.azureedge.net");
-            });
-    });
+    builder.Services.AddCors();
 }
 
 // Dev mode
@@ -208,6 +201,15 @@ if (builder.Environment.IsDevelopment())
     // swagger UI
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+if(builder.Environment.IsProduction()){
+    app.UseCors(options =>
+    {
+        options
+        .WithOrigins("https://testdeploymentmystickers.z1.web.core.windows.net", "http://localhost:2333", "https://mystickerstest2.azureedge.net")
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
 }
 
 // Configure the HTTP request pipeline.

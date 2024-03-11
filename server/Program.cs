@@ -156,7 +156,7 @@ if(builder.Environment.IsProduction()){
         options.AddDefaultPolicy(
             builder =>
             {
-                builder.WithOrigins("https://testdeploymentmystickers.z1.web.core.windows.net");
+                builder.WithOrigins("https://testdeploymentmystickers.z1.web.core.windows.net", "http://localhost:2333", "https://mystickerstest2.azureedge.net");
             });
     });
 }

@@ -27,6 +27,11 @@ export function ErrorPage({ error }: { error: any }) {
     console.log(errorType, error);
     return (
         <div className={styles.root}>
+            <Text>
+                {JSON.stringify(error.response)}
+                {JSON.stringify(errorType)}
+                {JSON.stringify(error)}
+            </Text>
             {errorType === Err.EXPIRE ? (
                 <SignOutRegular className={styles.img} />
             ) : errorType === Err.NETWORK ? (

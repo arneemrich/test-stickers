@@ -19,7 +19,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
         getContext().then((c) => {
             const tenantId = c.user?.tenant?.id;
             // const link = `https://admin.teams.microsoft.com/policies/manage-apps/${AAD_ID}/permission`;
-            const link = `https://login.microsoftonline.com/${tenantId}/adminconsent?client_id=${AAD_ID}&scope=openid profile offline_access`;
+            const link = `https://login.microsoftonline.com/${tenantId}/adminconsent?client_id=${AAD_ID}&scope=openid profile offline_access AppRoleAssignment.ReadWrite.All`;
             setLink(link);
         });
     }, []);

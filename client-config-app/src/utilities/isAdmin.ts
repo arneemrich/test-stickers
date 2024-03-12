@@ -10,11 +10,7 @@ export function IsAdmin(idToken: string) {
             "2b745bdf-0803-4d80-aa65-822c4493daac", // Office Apps Administrator
         ];
         const decode = parseJwt(idToken);
-        if (!decode.wids) {
-            return false;
-        }
-        const role = (decode.wids as string[]).find((value) => directoryRoleTemplateIds.includes(value));
-        return !!role;
+        return decode.scp == "Admin"
     } catch (e) {
         return false;
     }

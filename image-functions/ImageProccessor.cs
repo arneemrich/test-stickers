@@ -107,6 +107,7 @@ public static class ImageProcessor
         if (eventGridEvent == null || imageBlobClient == null)
         {
             logger.LogError("Null arguments");
+            
             return;
         }
 
